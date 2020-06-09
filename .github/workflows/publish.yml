@@ -1,0 +1,60 @@
+---
+name: Publish to RubyGems and Bonsai
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  publish:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - name: Clone boutetnico/sensu-go-bonsai-asset
+        uses: actions/checkout@v2
+        with:
+          repository: boutetnico/sensu-go-bonsai-asset
+          path: bonsai
+
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.4'
+
+      - name: Setup RubyGems credentials
+        run: |
+          mkdir -p $HOME/.gem
+          touch $HOME/.gem/credentials
+          chmod 0600 $HOME/.gem/credentials
+          printf -- "---\n:rubygems_api_key: ${RUBYGEMS_API_KEY}\n" > $HOME/.gem/credentials
+        env:
+          RUBYGEMS_API_KEY: ${{ secrets.RUBYGEMS_API_KEY }}
+
+      - run: gem install bundler -v 2.1
+
+      - run: bundle install
+
+      - run: bundle exec rake default
+
+      - run: gem build sensu-plugins-mysql.gemspec
+
+      - run: gem install sensu-plugins-mysql-*.gem
+
+      - name: Publish to RubyGems
+        run: gem push sensu-plugins-mysql-*.gem
+
+      - name: Get the version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}
+
+      - name: Publish to Bonsai
+        run: bonsai/ruby-runtime/build-ruby-plugin-assets.sh sensu-plugins-mysql-boutetnico ${REPO} ${REF} ${VERSION}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPO: ${{ github.repository }}
+          REF: ${{ github.ref }}
+          VERSION: ${{ steps.get_version.outputs.VERSION }}

@@ -1,0 +1,24 @@
+---
+name: Test
+
+on: [push]
+
+jobs:
+  test:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Clone repository
+        uses: actions/checkout@v2
+
+      - uses: actions/setup-ruby@v1
+        with:
+          ruby-version: '2.4'
+
+      - run: gem install bundler -v 2.1
+
+      - run: bundle install
+
+      - run: bundle exec rake default
