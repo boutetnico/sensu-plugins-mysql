@@ -35,10 +35,20 @@ Style/Next:
 Style/NumericPredicate:
   Enabled: false
 
-# TODO: when we bump RC this should be:
-# Style/TrailingCommaInHashLiteral:
-#   Enabled: true
-# Style/TrailingCommaInArrayLiteral:
-#   Enabled: true
-Style/TrailingCommaInLiteral:
+Style/TrailingCommaInHashLiteral:
+  Enabled: false
+
+Style/TrailingCommaInArrayLiteral:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Layout/HashAlignment:
+  Enabled: false
+
+Style/SafeNavigation:
+  Enabled: false
+
+Style/RedundantCondition:
   Enabled: false
