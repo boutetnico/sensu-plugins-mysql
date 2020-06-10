@@ -10,21 +10,22 @@ This fork is automatically tested, built and published to [RubyGems](https://rub
 ## Files
  * bin/check-cloudwatch-mysql-sensu.rb
  * bin/check-mysql-alive.rb
- * bin/check-mysql-status.rb
  * bin/check-mysql-connections.rb
  * bin/check-mysql-disk.rb
  * bin/check-mysql-innodb-lock.rb
- * bin/check-mysql-threads.rb
+ * bin/check-mysql-msr-replication-status.rb
  * bin/check-mysql-query-result-count.rb
  * bin/check-mysql-select-count.rb
- * bin/check-mysql-msr-replication-status.rb
+ * bin/check-mysql-status.rb
+ * bin/check-mysql-threads.rb
+ * bin/metrics-mysql-disk.rb
  * bin/metrics-mysql-graphite.rb
  * bin/metrics-mysql-multiple-select-count.rb
  * bin/metrics-mysql-processes.rb
- * bin/metrics-mysql-raw.rb
- * bin/metrics-mysql.rb
  * bin/metrics-mysql-query-result-count.rb
+ * bin/metrics-mysql-raw.rb
  * bin/metrics-mysql-select-count.rb
+ * bin/metrics-mysql.rb
  * bin/mysql-metrics.sql
 
 ## Usage
